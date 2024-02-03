@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Secret</string>
+    <string name="add_button">ToDoAddBtn</string>
+</resources>

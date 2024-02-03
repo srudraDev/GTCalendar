@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:hint="Title"
+        android:padding="16dp"
+        android:textColorHint="@color/cardview_dark_background"
+        app:layout_constraintBottom_toTopOf="@id/editTextDetails"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextDetails"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Details"
+        android:textColorHint="@color/cardview_dark_background"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonDueDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextName" />
+
+    <Button
+        android:id="@+id/buttonDueDate"
+        android:layout_width="375dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="20dp"
+        android:padding="16dp"
+        android:text="Select Due Date"
+        app:layout_constraintBottom_toTopOf="@id/buttonAddTask"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDetails" />
+
+    <Button
+        android:id="@+id/buttonAddTask"
+        android:layout_width="375dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="375dp"
+        android:padding="16dp"
+        android:text="Add Task"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDueDate" />
+</androidx.constraintlayout.widget.ConstraintLayout>
