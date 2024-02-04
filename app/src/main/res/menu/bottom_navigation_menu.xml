@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- bottom_navigation_menu.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_calendar"
+        android:title="Calendar"
+        android:icon="@drawable/ic_schedule" />
+
+    <item
+        android:id="@+id/navigation_todo"
+        android:title="To-Do"
+        android:icon="@drawable/ic_todo" />
+</menu>
