@@ -13,6 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "GTCalendar"
+rootProject.name = "Secret"
 include(":app")
- 
