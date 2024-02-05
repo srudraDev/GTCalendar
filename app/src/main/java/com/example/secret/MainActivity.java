@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.calendarFragment,
+                R.id.navigation_calendar,
                 R.id.navigation_todo  // Specify the ID of your ToDoFragment
                 // Add other fragment IDs if needed
         ).build();

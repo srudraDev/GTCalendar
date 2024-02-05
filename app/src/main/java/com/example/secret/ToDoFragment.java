@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.PopupWindow;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.fragment.app.Fragment;
@@ -21,16 +22,21 @@ import java.util.List;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import androidx.lifecycle.ViewModelProvider;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.appcompat.widget.AppCompatButton;
 
 import java.util.Calendar;
 
 public class ToDoFragment extends Fragment {
     private String taskName; // Variable to store task name
     private String taskDetails; // Variable to store task details
-    private List<Task> taskList;
+    private List<Task> taskList = new ArrayList<>();
     private TaskAdapter taskAdapter;
-    Button buttonDueDate;
+    private Button buttonDueDate;
+
+    private TaskViewModel taskViewModel;
 
     public ToDoFragment() {
         // Required empty public constructor
@@ -41,21 +47,25 @@ public class ToDoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_todo, container, false);
-        taskList = new ArrayList<>();
-        taskAdapter = new TaskAdapter(taskList);
+
+        taskViewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
+        taskAdapter = new TaskAdapter(requireContext(), taskViewModel.getTaskList());
+
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewTasks);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(taskAdapter);
         FloatingActionButton fabAddTask = view.findViewById(R.id.fabAddTask);
+
         fabAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Show the task add popup
                 showAddTaskPopup();
-                navigateToAnotherFragment();
 
             }
         });
+
+
         return view;
     }
     private void showAddTaskPopup() {
@@ -94,7 +104,7 @@ public class ToDoFragment extends Fragment {
 
                 // Perform any additional actions needed with the entered data
                 Task task = new Task(taskName, taskDetails, showDate);
-                taskList.add(task);
+                taskViewModel.addTask(task);
                 taskAdapter.notifyDataSetChanged();
 
                 // Dismiss the popup
@@ -131,22 +141,5 @@ public class ToDoFragment extends Fragment {
 
         // Show the DatePickerDialog
         datePickerDialog.show();
-    }
-    private void navigateToAnotherFragment() {
-        // Assume you have a MainActivity hosting this fragment
-        MainActivity mainActivity = (MainActivity) requireActivity();
-
-        // Create a FragmentTransaction to replace the existing fragment with ToDoFragment
-        FragmentManager fragmentManager = mainActivity.getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        // Replace the current fragment with ToDoFragment
-        fragmentTransaction.replace(R.id.container, new ToDoFragment());
-
-        // Add this transaction to the back stack (optional)
-        fragmentTransaction.addToBackStack(null);
-
-        // Commit the transaction
-        fragmentTransaction.commit();
     }
 }
