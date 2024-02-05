@@ -7,9 +7,9 @@ import java.util.List;
 
 public class TaskViewModel extends ViewModel {
 
-    private final List<Task> taskList = new ArrayList<>();
+    private static final List<Task> taskList = new ArrayList<>();
 
-    public List<Task> getTaskList() {
+    public static List<Task> getTaskList() {
         return taskList;
     }
 

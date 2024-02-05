@@ -1,8 +1,6 @@
 // TaskAdapter.java
 package com.example.secret;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.view.Gravity;
@@ -75,13 +73,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         );
 
         // Set up UI components and logic for the popup
-        EditText editTextName = popupView.findViewById(R.id.editTextName);
-        EditText editTextDetails = popupView.findViewById(R.id.editTextDetails);
+        EditText editTextName = popupView.findViewById(R.id.EditTextName);
+        EditText editTextDetails = popupView.findViewById(R.id.EditTextDetails);
         buttonDueDate = popupView.findViewById(R.id.buttonDueDate);
-
         Button buttonEdit = popupView.findViewById(R.id.buttonEdit);
         Button buttonDelete = popupView.findViewById(R.id.buttonDelete);
 
+        Task existingTask = TaskViewModel.getTaskList().get(position);
+        editTextName.setText(existingTask.getTaskName());
+        editTextDetails.setText(existingTask.getTaskDetails());
+        buttonDueDate.setText(existingTask.getSelectedDate());
         // Handle Edit button click
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override

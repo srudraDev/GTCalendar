@@ -15,17 +15,13 @@ import android.widget.PopupWindow;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+
 import java.util.ArrayList;
 import java.util.List;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.appcompat.widget.AppCompatButton;
 
 import java.util.Calendar;
 
@@ -81,8 +77,8 @@ public class ToDoFragment extends Fragment {
         );
 
         // Set up UI components and logic for the popup
-        EditText editTextName = popupView.findViewById(R.id.editTextName);
-        EditText editTextDetails = popupView.findViewById(R.id.editTextDetails);
+        EditText editTextName = popupView.findViewById(R.id.TextName);
+        EditText editTextDetails = popupView.findViewById(R.id.TextDetails);
         buttonDueDate = popupView.findViewById(R.id.buttonDueDate);
         Button buttonAddTask = popupView.findViewById(R.id.buttonAddTask);
 
@@ -130,7 +126,7 @@ public class ToDoFragment extends Fragment {
                     public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDayOfMonth) {
                         // Handle the selected date
                         // You can update the UI or save the selected date
-                        String selectedDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDayOfMonth;
+                        String selectedDate = (selectedMonth + 1) + "-" + selectedDayOfMonth+ "-" + selectedYear;
                         buttonDueDate.setText(selectedDate);
                     }
                 },
