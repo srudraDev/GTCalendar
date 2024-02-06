@@ -11,13 +11,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.PopupWindow;
+import android.widget.Spinner;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.fragment.app.Fragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -28,10 +26,8 @@ import java.util.Calendar;
 public class ToDoFragment extends Fragment {
     private String taskName; // Variable to store task name
     private String taskDetails; // Variable to store task details
-    private List<Task> taskList = new ArrayList<>();
     private TaskAdapter taskAdapter;
     private Button buttonDueDate;
-
     private TaskViewModel taskViewModel;
 
     public ToDoFragment() {
@@ -45,22 +41,18 @@ public class ToDoFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_todo, container, false);
 
         taskViewModel = new ViewModelProvider(requireActivity()).get(TaskViewModel.class);
-        taskAdapter = new TaskAdapter(requireContext(), taskViewModel.getTaskList());
-
+        taskAdapter = new TaskAdapter(requireContext(),taskViewModel.getTaskList());
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewTasks);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setAdapter(taskAdapter);
         FloatingActionButton fabAddTask = view.findViewById(R.id.fabAddTask);
-
         fabAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Show the task add popup
                 showAddTaskPopup();
-
             }
         });
-
 
         return view;
     }
@@ -81,6 +73,7 @@ public class ToDoFragment extends Fragment {
         EditText editTextDetails = popupView.findViewById(R.id.TextDetails);
         buttonDueDate = popupView.findViewById(R.id.buttonDueDate);
         Button buttonAddTask = popupView.findViewById(R.id.buttonAddTask);
+        Spinner spinnerTaskType = popupView.findViewById(R.id.spinnerType);
 
         // Handle Due Date button click (You can implement a DatePickerDialog here)
         buttonDueDate.setOnClickListener(new View.OnClickListener() {
@@ -97,9 +90,15 @@ public class ToDoFragment extends Fragment {
                 taskName = editTextName.getText().toString();
                 taskDetails = editTextDetails.getText().toString();
                 String showDate = buttonDueDate.getText().toString();
+                String selectedTaskType = spinnerTaskType.getSelectedItem().toString();
+                boolean isAssignment = selectedTaskType.equals("Assignments");
+                boolean isExam= selectedTaskType.equals("Exams");
+
+
+
 
                 // Perform any additional actions needed with the entered data
-                Task task = new Task(taskName, taskDetails, showDate);
+                Task task = new Task(taskName, taskDetails, showDate, isAssignment, isExam);
                 taskViewModel.addTask(task);
                 taskAdapter.notifyDataSetChanged();
 
