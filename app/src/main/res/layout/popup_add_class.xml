@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#fff4fc">
+
+    <EditText
+        android:id="@+id/editClassName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Class Name"
+        android:inputType="text"/>
+
+    <Spinner
+        android:id="@+id/spinnerDaysOfWeek"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:entries="@array/days_of_week"
+        android:prompt="@string/select_day_prompt"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="18sp"
+        android:text="Start Time:" />
+
+    <!-- Spinner for Start Time -->
+    <NumberPicker
+        android:id="@+id/numberPickerStartTime"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="End Time:"
+        android:textSize="18sp" />
+
+    <!-- Spinner for End Time -->
+    <NumberPicker
+        android:id="@+id/numberPickerEndTime"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
+
+    <Button
+        android:id="@+id/btnAddClass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="16dp"
+        android:text="Add Class"/>
+
+</LinearLayout>

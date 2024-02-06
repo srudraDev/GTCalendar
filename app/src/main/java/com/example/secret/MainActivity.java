@@ -1,11 +1,11 @@
 package com.example.secret;
 
-import androidx.annotation.NonNull;
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -19,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 public class MainActivity extends AppCompatActivity {
+    private Button sortDateButton;
+    private TaskAdapter taskAdapter;
 
     AppBarConfiguration appBarConfiguration;
     @Override
@@ -37,8 +39,31 @@ public class MainActivity extends AppCompatActivity {
                 // Add other fragment IDs if needed
         ).build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+
+            // Add the visibility logic for the "Sort by Date" button
+            if (destination.getId() == R.id.navigation_todo) {
+                // Show the Sort button in the ToDo section
+                findViewById(R.id.buttonSortByDate).setVisibility(View.VISIBLE);
+            } else {
+                // Hide the Sort button in other sections
+                findViewById(R.id.buttonSortByDate).setVisibility(View.GONE);
+            }
+        });
+
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
+        sortDateButton = findViewById(R.id.buttonSortByDate);
+        taskAdapter = new TaskAdapter(this, TaskViewModel.getTaskList());
+
+        sortDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                taskAdapter.sortByDate();
+                taskAdapter.notifyDataSetChanged();
+
+            }
+        });
     }
 
 
