@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/eventTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Event Name"
+        android:textSize="6.5pt"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+    <Button
+        android:id="@+id/timeSlotButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+    </Button>
+
+    <!-- Add more views as needed to display the time, day, etc. -->
+</FrameLayout>

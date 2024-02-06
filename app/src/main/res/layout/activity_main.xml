@@ -36,13 +36,14 @@
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" >
     <!-- Add Sort Button -->
         <Button
@@ -56,5 +57,5 @@
     </androidx.appcompat.widget.Toolbar>
 
 
-
+  
 </androidx.constraintlayout.widget.ConstraintLayout>

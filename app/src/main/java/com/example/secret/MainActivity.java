@@ -13,6 +13,9 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        new CalendarService();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         appBarConfiguration = new AppBarConfiguration.Builder(
@@ -61,10 +65,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
+
 }
