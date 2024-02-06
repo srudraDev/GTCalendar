@@ -1,8 +1,6 @@
 // TaskAdapter.java
 package com.example.secret;
 
-import static androidx.core.content.ContentProviderCompat.requireContext;
-
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.view.Gravity;
@@ -16,9 +14,12 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
@@ -49,6 +50,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         holder.textViewTaskName.setText(task.getTaskName());
         holder.textViewTaskDetails.setText(task.getTaskDetails());
         holder.textViewSelectedDate.setText(task.getSelectedDate());
+        if (task.isAssignment()) {
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.assignmentColor));
+        } else if (task.isExam()) {
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.examColor));
+        } else {
+            // Default color if no type is specified
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+        }
         holder.editDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,13 +84,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         );
 
         // Set up UI components and logic for the popup
-        EditText editTextName = popupView.findViewById(R.id.editTextName);
-        EditText editTextDetails = popupView.findViewById(R.id.editTextDetails);
+        EditText editTextName = popupView.findViewById(R.id.EditTextName);
+        EditText editTextDetails = popupView.findViewById(R.id.EditTextDetails);
         buttonDueDate = popupView.findViewById(R.id.buttonDueDate);
-
         Button buttonEdit = popupView.findViewById(R.id.buttonEdit);
         Button buttonDelete = popupView.findViewById(R.id.buttonDelete);
 
+        Task existingTask = TaskViewModel.getTaskList().get(position);
+        editTextName.setText(existingTask.getTaskName());
+        editTextDetails.setText(existingTask.getTaskDetails());
+        buttonDueDate.setText(existingTask.getSelectedDate());
         // Handle Edit button click
         buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +105,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 String showDate = buttonDueDate.getText().toString();
 
                 // Perform any additional actions needed with the entered data
-                Task task = new Task(taskName, taskDetails, showDate);
+                Task task = new Task(taskName, taskDetails, showDate, false, false);
                 if (editingPosition != -1 && editingPosition < taskList.size()) {
                     taskList.set(editingPosition, task);
                     notifyItemChanged(editingPosition);
@@ -159,6 +171,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         // Show the DatePickerDialog
         datePickerDialog.show();
+    }
+    public void sortByDate() {
+        // Sort the tasks by due date in ascending order
+        Collections.sort(taskList, new Comparator<Task>() {
+            @Override
+            public int compare(Task task1, Task task2) {
+                // Compare due dates
+                return task1.getSelectedDate().compareTo(task2.getSelectedDate());
+            }
+        });
     }
 
     @Override

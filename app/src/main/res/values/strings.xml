@@ -3,4 +3,5 @@
     <string name="add_button">ToDoAddBtn</string>
     <string name="add_class_button_description">+</string>
     <string name="select_day_prompt">Select a Day</string>
+    <string name="select_type_hint">Select Type</string>
 </resources>

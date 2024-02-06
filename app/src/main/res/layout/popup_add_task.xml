@@ -7,20 +7,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <EditText
-        android:id="@+id/editTextName"
+        android:id="@+id/TextName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:hint="Title"
         android:padding="16dp"
         android:textColorHint="@color/cardview_dark_background"
-        app:layout_constraintBottom_toTopOf="@id/editTextDetails"
+        app:layout_constraintBottom_toTopOf="@id/TextDetails"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextDetails"
+        android:id="@+id/TextDetails"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -30,7 +30,7 @@
         app:layout_constraintBottom_toTopOf="@+id/buttonDueDate"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextName" />
+        app:layout_constraintTop_toBottomOf="@id/TextName" />
 
     <Button
         android:id="@+id/buttonDueDate"
@@ -42,7 +42,19 @@
         app:layout_constraintBottom_toTopOf="@id/buttonAddTask"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDetails" />
+        app:layout_constraintTop_toBottomOf="@+id/TextDetails" />
+    <Spinner
+        android:id="@+id/spinnerType"
+        android:layout_width="150dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="20dp"
+        android:padding="16dp"
+        android:prompt="@string/select_type_hint"
+        app:layout_constraintBottom_toTopOf="@id/buttonAddTask"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextDetails"
+        android:entries="@array/task_types"/>
 
     <Button
         android:id="@+id/buttonAddTask"
