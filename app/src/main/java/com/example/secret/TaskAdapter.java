@@ -1,8 +1,10 @@
 // TaskAdapter.java
 package com.example.secret;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -27,6 +29,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     private List<Task> taskList;
     private Context context;
+    private ConfirmationListener listener;
+    private interface ConfirmationListener {
+        void onConfirmationResult(boolean confirmed);
+    }
     private String taskName;
     private String taskDetails;
     private Button buttonDueDate;
@@ -99,46 +105,39 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         buttonDueDate.setText(existingTask.getSelectedDate());
         // Handle Edit button click
         buttonEdit.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                // Handle editing task (you can implement a similar popup as the "Add Task" popup)
-                // ...
-                taskName = editTextName.getText().toString();
-                taskDetails = editTextDetails.getText().toString();
-                String showDate = buttonDueDate.getText().toString();
-
-                // Perform any additional actions needed with the entered data
-                Task task = new Task(taskName, taskDetails, showDate, false, false);
-                if (editingPosition != -1 && editingPosition < taskList.size()) {
-                    taskList.set(editingPosition, task);
-                    notifyItemChanged(editingPosition);
-                }
-                // Reset the editing position
-                editingPosition = -1;
-
+                showConfirmationDialog("edit", context);
+                listener = new TaskAdapter.ConfirmationListener() {
+                    public void onConfirmationResult(boolean confirmed) {
+                        if (confirmed) {
+                            editButtonActivate(editTextName, editTextDetails);
+                        }
+                    }
+                };
                 // Dismiss the popup
                 popupWindow.dismiss();
             }
         });
-        // Handle Due Date button click (You can implement a DatePickerDialog here)
         buttonDueDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog();
             }
         });
-
         // Handle Delete button click
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle deleting task
-                // ...
-
-                // Remove the task from the list
-                taskList.remove(position);
-                notifyItemRemoved(position);
-
+                showConfirmationDialog("delete", context);
+                listener = new TaskAdapter.ConfirmationListener() {
+                    public void onConfirmationResult(boolean confirmed) {
+                        if (confirmed) {
+                            deleteButtonActivate(position);
+                        }
+                    }
+                };
                 // Dismiss the popup
                 popupWindow.dismiss();
             }
@@ -146,6 +145,31 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         // Show the popup at the center of the screen
         popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+    }
+    private void editButtonActivate(EditText editTextName, EditText editTextDetails) {
+        // Handle editing task (you can implement a similar popup as the "Add Task" popup)
+        // ...
+        taskName = editTextName.getText().toString();
+        taskDetails = editTextDetails.getText().toString();
+        String showDate = buttonDueDate.getText().toString();
+
+        // Perform any additional actions needed with the entered data
+        Task task = new Task(taskName, taskDetails, showDate, false, false);
+        if (editingPosition != -1 && editingPosition < taskList.size()) {
+            taskList.set(editingPosition, task);
+            notifyItemChanged(editingPosition);
+        }
+        // Handle Due Date button click (You can implement a DatePickerDialog here)
+        // Reset the editing position
+        editingPosition = -1;
+    }
+    private void deleteButtonActivate(int position) {
+        // Handle deleting task
+        // ...
+
+        // Remove the task from the list
+        taskList.remove(position);
+        notifyItemRemoved(position);
     }
 
     private void showDatePickerDialog() {
@@ -204,5 +228,28 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             textViewSelectedDate = itemView.findViewById(R.id.textViewSelectedDate);
             editDeleteButton = itemView.findViewById(R.id.Edit_Delete);
         }
+    }
+    private void showConfirmationDialog(String action, Context context) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        String message = "Are you sure you want to " + action + " this item?";
+        builder.setMessage(message)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // User confirmed, set result to true
+                        listener.onConfirmationResult(true);
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // User canceled, set result to false
+                        listener.onConfirmationResult(false);
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

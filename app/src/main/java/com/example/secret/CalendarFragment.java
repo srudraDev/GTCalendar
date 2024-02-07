@@ -1,6 +1,6 @@
 package com.example.secret;
 
-import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -8,16 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
-import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,7 +27,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class CalendarFragment extends Fragment {
 
@@ -54,12 +50,13 @@ public class CalendarFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
         viewModel = new ViewModelProvider(this).get(CalendarViewModel.class);
+
         // Observe changes in the classList LiveData
         // Update your RecyclerView with the new list of classes
         viewModel.getClassList().observe(getViewLifecycleOwner(), (Observer<List<ClassItem>>) this::updateUI);
 
         // Initialize and set the adapter
-        scheduleAdapter = new ScheduleAdapter(classList);
+        scheduleAdapter = new ScheduleAdapter(classList, viewModel, requireContext());
         recyclerView.setAdapter(scheduleAdapter);
 
         FloatingActionButton fabAddClass = view.findViewById(R.id.fabAddClass);
@@ -84,7 +81,9 @@ public class CalendarFragment extends Fragment {
         View popupView = LayoutInflater.from(requireContext()).inflate(R.layout.popup_add_class, null);
 
         // Initialize views in the popup
-        EditText editClassName = popupView.findViewById(R.id.editClassName);
+        EditText editTextName = popupView.findViewById(R.id.editClassName);
+        EditText editTextProfessor = popupView.findViewById(R.id.editProfessor);
+        EditText editTextLocation = popupView.findViewById(R.id.editLocation);
         Spinner spinnerDaysOfWeek = popupView.findViewById(R.id.spinnerDaysOfWeek);
         NumberPicker numberPickerStartTime = popupView.findViewById(R.id.numberPickerStartTime);
         NumberPicker numberPickerEndTime = popupView.findViewById((R.id.numberPickerEndTime));
@@ -109,7 +108,9 @@ public class CalendarFragment extends Fragment {
         // Set up click listener for the "Add Class" button
         btnAddClass.setOnClickListener(v -> {
             // Handle the "Add Class" button click
-            String className = editClassName.getText().toString();
+            String className = editTextName.getText().toString();
+            String professor = editTextProfessor.getText().toString();
+            String location = editTextLocation.getText().toString();
             String selectedDay = spinnerDaysOfWeek.getSelectedItem().toString();
             String selectedStartTime = displayedValues[numberPickerStartTime.getValue()];
             String selectedEndTime = displayedValues[numberPickerEndTime.getValue()];
@@ -117,9 +118,10 @@ public class CalendarFragment extends Fragment {
             Log.d("Checker", selectedStartTime);
 
             ClassItem newClass = new ClassItem();
-            newClass.setClassName(className);
+            newClass.setClassNameAndSection(className);
+            newClass.setProfessor(professor);
+            newClass.setLocationAndRoomNumber(location);
             newClass.setDayOfWeek(selectedDay);
-
             newClass.setStartTime(selectedStartTime);
             newClass.setEndTime(selectedEndTime);
 

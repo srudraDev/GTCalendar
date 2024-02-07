@@ -1,7 +1,12 @@
 package com.example.secret;
+
+import android.location.Location;
+
 public class ClassItem {
 
-    private String className;
+    private String classNameAndSection;
+    private String Professor;
+    private String LocationAndRoomNumber;
     private String dayOfWeek; // Use Calendar.DAY_OF_WEEK values
     private String startTime; // Use Calendar.HOUR_OF_DAY values
     private String endTime;
@@ -12,20 +17,22 @@ public class ClassItem {
         // Default constructor
     }
 
-    public ClassItem(String className, String dayOfWeek, String startTime, String endTime) {
-        this.className = className;
+    public ClassItem(String className, String professor, String locationAndRoomNumber, String dayOfWeek, String startTime, String endTime) {
+        this.classNameAndSection = className;
+        this.Professor = professor;
+        this.LocationAndRoomNumber = locationAndRoomNumber;
         this.dayOfWeek = dayOfWeek;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
     // Getters and setters
-    public String getClassName() {
-        return className;
+    public String getClassNameAndSection() {
+        return classNameAndSection;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
+    public void setClassNameAndSection(String classNameAndSection) {
+        this.classNameAndSection = classNameAndSection;
     }
 
     public String getDayOfWeek() {
@@ -55,4 +62,12 @@ public class ClassItem {
     public int getId() {return id;}
 
     public void setId(int id) {this.id = id;}
+
+    public String getProfessor() {return Professor;}
+
+    public void setProfessor(String professor) {this.Professor = professor;}
+
+    public String getLocationAndRoomNumber() {return LocationAndRoomNumber;}
+
+    public void setLocationAndRoomNumber(String locationAndRoomNumber) {this.LocationAndRoomNumber = locationAndRoomNumber;}
 }

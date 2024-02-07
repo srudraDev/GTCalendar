@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
@@ -11,7 +11,19 @@
         android:id="@+id/editClassName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Class Name"
+        android:hint="Class Name and Section"
+        android:inputType="text"/>
+    <EditText
+        android:id="@+id/editProfessor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Professor Name"
+        android:inputType="text"/>
+    <EditText
+        android:id="@+id/editLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Location and Room Number"
         android:inputType="text"/>
 
     <Spinner
