@@ -11,12 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -75,6 +77,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
                 // Show the edit/delete popup
                 showEditDeletePopup(holder.getAdapterPosition(), context);
+            }
+        });
+        holder.checkBoxTaskCompleted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // Delete the task when the checkbox is checked
+                    deleteTask(holder.getAdapterPosition());
+                }
             }
         });
 
@@ -220,6 +231,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         TextView textViewTaskDetails;
         TextView textViewSelectedDate;
         AppCompatButton editDeleteButton;
+        AppCompatCheckBox checkBoxTaskCompleted;
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -227,7 +239,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             textViewTaskDetails = itemView.findViewById(R.id.textViewTaskDetails);
             textViewSelectedDate = itemView.findViewById(R.id.textViewSelectedDate);
             editDeleteButton = itemView.findViewById(R.id.Edit_Delete);
+            checkBoxTaskCompleted = itemView.findViewById(R.id.checkBoxTaskCompleted);
         }
+    }
+    public void deleteTask(int position) {
+        taskList.remove(position); // Remove the task at the given position
+        notifyItemRemoved(position); // Notify adapter about the item removal
     }
     private void showConfirmationDialog(String action, Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -18,7 +21,8 @@ import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
     private Button sortDateButton;
-    private TaskAdapter taskAdapter;
+    private TaskViewModel taskViewModel;
+    private MutableLiveData<Boolean> sortTrigger = new MutableLiveData<>();
 
     AppBarConfiguration appBarConfiguration;
     @Override
@@ -51,15 +55,14 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
         sortDateButton = findViewById(R.id.buttonSortByDate);
-        taskAdapter = new TaskAdapter(this, TaskViewModel.getTaskList());
+        taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 
         sortDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                taskAdapter.sortByDate();
-
-                taskAdapter.notifyDataSetChanged();
-                Log.d("notify checker", "taskadapter notified");
+                taskViewModel.sortByDate();
+                refreshToDoFragment();
+                sortTrigger.setValue(true);
             }
         });
     }
@@ -68,5 +71,18 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public LiveData<Boolean> getSortTrigger() {
+        return sortTrigger;
+    }
+
+    private void refreshToDoFragment() {
+        // Find the ToDoFragment by its tag
+        ToDoFragment toDoFragment = (ToDoFragment) getSupportFragmentManager().findFragmentByTag("ToDoFragment");
+        // If the fragment is found, refresh it
+        if (toDoFragment != null) {
+            toDoFragment.refreshList();
+        }
     }
 }

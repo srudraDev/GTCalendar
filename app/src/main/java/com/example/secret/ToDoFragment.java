@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.Spinner;
 
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.fragment.app.Fragment;
@@ -51,6 +52,16 @@ public class ToDoFragment extends Fragment {
             public void onClick(View v) {
                 // Show the task add popup
                 showAddTaskPopup();
+            }
+        });
+        MainActivity mainActivity = (MainActivity) requireActivity();
+        mainActivity.getSortTrigger().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean shouldSort) {
+                if (shouldSort) {
+                    // Refresh the task list if sorting is triggered
+                    taskAdapter.notifyDataSetChanged();
+                }
             }
         });
 
@@ -136,5 +147,9 @@ public class ToDoFragment extends Fragment {
 
         // Show the DatePickerDialog
         datePickerDialog.show();
+    }
+    public void refreshList() {
+        // Notify the adapter of the changes
+        taskAdapter.notifyDataSetChanged();
     }
 }

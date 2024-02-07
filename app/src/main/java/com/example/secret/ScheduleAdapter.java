@@ -110,7 +110,20 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         editTextLocation.setText(existingClass.getLocationAndRoomNumber());
         selectedDay.setPrompt(existingClass.getDayOfWeek());
 
+        //number picker initialization
+        String[] displayedValues = generateTimePickerValues();
+        startTime.setMinValue(0);
+        startTime.setMaxValue(displayedValues.length - 1);
+        startTime.setDisplayedValues(displayedValues);
+        startTime.setWrapSelectorWheel(true);
 
+        endTime.setMinValue(0);
+        endTime.setMaxValue(displayedValues.length - 1);
+        endTime.setDisplayedValues(displayedValues);
+        endTime.setWrapSelectorWheel(true);
+
+        String selectedStartTime = displayedValues[startTime.getValue()];
+        String selectedEndTime = displayedValues[endTime.getValue()];
 
         // Handle Edit button click
         buttonEdit.setOnClickListener(new View.OnClickListener() {
@@ -120,7 +133,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
                 listener = new ConfirmationListener() {
                     public void onConfirmationResult(boolean confirmed) {
                         if (confirmed) {
-                            editButtonActivate(editTextName, editTextProfessor, editTextLocation, startTime, endTime);
+                            editButtonActivate(editTextName, editTextProfessor, editTextLocation, selectedStartTime, selectedEndTime);
                         }
                     }
                 };
@@ -163,25 +176,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         notifyItemRemoved(position);
     }
 
-    public void editButtonActivate(EditText editTextName, EditText editTextProfessor, EditText editTextLocation, NumberPicker startTime, NumberPicker endTime) {
-        //number picker initialization
-        String[] displayedValues = generateTimePickerValues();
-        startTime.setMinValue(0);
-        startTime.setMaxValue(displayedValues.length - 1);
-        startTime.setDisplayedValues(displayedValues);
-        startTime.setWrapSelectorWheel(true);
+    public void editButtonActivate(EditText editTextName, EditText editTextProfessor, EditText editTextLocation, String selectedStartTime, String selectedEndTime) {
 
-        endTime.setMinValue(0);
-        endTime.setMaxValue(displayedValues.length - 1);
-        endTime.setDisplayedValues(displayedValues);
-        endTime.setWrapSelectorWheel(true);
 
         classNameAndSection = editTextName.getText().toString();
         classProfessor = editTextProfessor.getText().toString();
         classLocation = editTextLocation.getText().toString();
         String showDay = selectedDay.getPrompt().toString();
-        String selectedStartTime = displayedValues[startTime.getValue()];
-        String selectedEndTime = displayedValues[endTime.getValue()];
 
         // Perform any additional actions needed with the entered data
         ClassItem Class = new ClassItem(classNameAndSection, classProfessor, classLocation, showDay, selectedStartTime, selectedEndTime);
