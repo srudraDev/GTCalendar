@@ -3,6 +3,7 @@ package com.example.secret;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,11 +42,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_task, parent, false);
+        Log.d("oncreateview", "oncreateviewholder run");
         return new TaskViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
+        Log.d("onbindview", "onbindviewholder run");
         Task task = taskList.get(position);
         holder.textViewTaskName.setText(task.getTaskName());
         holder.textViewTaskDetails.setText(task.getTaskDetails());
@@ -56,7 +59,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.examColor));
         } else {
             // Default color if no type is specified
-            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(context, R.color.taskColor));
         }
         holder.editDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override

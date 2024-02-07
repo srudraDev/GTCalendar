@@ -4,6 +4,7 @@ import static androidx.core.content.ContentProviderCompat.requireContext;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -56,8 +57,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 taskAdapter.sortByDate();
-                taskAdapter.notifyDataSetChanged();
 
+                taskAdapter.notifyDataSetChanged();
+                Log.d("notify checker", "taskadapter notified");
             }
         });
     }

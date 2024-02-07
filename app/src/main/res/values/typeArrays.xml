@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="task_types">
-        <item>Select Type</item>
+        <item>Task</item>
         <item>Exams</item>
         <item>Assignments</item>
     </string-array>
