@@ -5,7 +5,8 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.util.Log;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatCheckBox;
@@ -50,13 +52,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_task, parent, false);
-        Log.d("oncreateview", "oncreateviewholder run");
         return new TaskViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
-        Log.d("onbindview", "onbindviewholder run");
         Task task = taskList.get(position);
         holder.textViewTaskName.setText(task.getTaskName());
         holder.textViewTaskDetails.setText(task.getTaskDetails());
@@ -79,12 +79,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 showEditDeletePopup(holder.getAdapterPosition(), context);
             }
         });
+
         holder.checkBoxTaskCompleted.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    holder.checkBoxTaskCompleted.setButtonTintList(ColorStateList.valueOf(Color.BLACK));
+
                     // Delete the task when the checkbox is checked
-                    deleteTask(holder.getAdapterPosition());
+                    moveTaskToTop(holder.getAdapterPosition());
                 }
             }
         });
@@ -242,9 +245,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             checkBoxTaskCompleted = itemView.findViewById(R.id.checkBoxTaskCompleted);
         }
     }
-    public void deleteTask(int position) {
-        taskList.remove(position); // Remove the task at the given position
-        notifyItemRemoved(position); // Notify adapter about the item removal
+    private void moveTaskToTop(int position) {
+        if (position > 0) {
+            Task completedTask = taskList.get(position);
+            taskList.remove(position);
+            taskList.add(0, completedTask);
+            notifyItemMoved(position, 0);
+        }
     }
     private void showConfirmationDialog(String action, Context context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

@@ -3,7 +3,11 @@
     <style name="Base.Theme.Secret" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">#C3A242</item> <!-- Change to your desired color -->
+        <item name="android:windowBackground">#FFE391</item> <!-- Change to your desired color -->
     </style>
-
     <style name="Theme.Secret" parent="Base.Theme.Secret" />
+    <style name="AppButtonStyle" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>

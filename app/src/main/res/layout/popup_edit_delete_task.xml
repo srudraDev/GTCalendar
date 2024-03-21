@@ -37,6 +37,7 @@
         android:layout_marginTop="20dp"
         android:padding="16dp"
         android:text="Select Due Date"
+        style = "@style/AppButtonStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EditTextDetails" />
@@ -47,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="285dp"
         android:layout_marginEnd="16dp"
+        style = "@style/AppButtonStyle"
         android:text="Delete Task"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonDueDate" />
@@ -57,6 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="285dp"
+        style = "@style/AppButtonStyle"
         android:text="Save Task"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonDueDate" />

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
@@ -46,7 +46,7 @@
     <NumberPicker
         android:id="@+id/numberPickerStartTime"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         android:layout_marginBottom="16dp" />
 
     <TextView
@@ -61,15 +61,25 @@
     <NumberPicker
         android:id="@+id/numberPickerEndTime"
         android:layout_width="match_parent"
-        android:layout_height="150dp" />
+        android:layout_height="100dp" />
 
     <Button
-        android:id="@+id/btnAddClass"
+        android:id="@+id/btnEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
+        android:layout_gravity="center"
         android:layout_marginTop="16dp"
-        android:text="Add Class"
-        style = "@style/AppButtonStyle" />
+        style = "@style/AppButtonStyle"
+        android:text="Save" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="20dp"
+        style = "@style/AppButtonStyle"
+        android:text="Delete" />
 
 </LinearLayout>

@@ -3,8 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="divider_color">#3D91D5</color>
-    <color name="assignmentColor">#3498db</color> <!-- Blue color for Assignment -->
-    <color name="examColor">#e74c3c</color> <!-- Red color for Exam -->
-    <color name="taskColor">#119c36</color> <!-- Green color for Task -->
-    <color name="darker_gray">#424242</color>
+    <color name="assignmentColor">#61ACDF</color> <!-- Blue color for Assignment -->
+    <color name="examColor">#FA5550</color> <!-- Red color for Exam -->
+    <color name="taskColor">#3BC15E</color> <!-- Green color for Task -->
 </resources>

@@ -64,7 +64,7 @@
         android:layout_width="94dp"
         android:layout_height="32dp"
         android:layout_marginEnd="32dp"
-        android:background="@null"
+        style = "@style/AppButtonStyle"
         android:text="Edit / Delete"
         android:textColor="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
